@@ -299,7 +299,6 @@ WHERE state_id NOT IN (7, 8, 9);
 6)update 10 data for different columns for each table.
 7)delete 3 data from each table.
 8)Fetch data using AND OR IN NOT IN 
--- Step 1: Create the Table
 CREATE TABLE scam_info (
     scam_id BIGINT,
     scam_name VARCHAR(100),
@@ -313,26 +312,22 @@ CREATE TABLE scam_info (
     authority_response VARCHAR(100)
 );
 
--- Step 2: Alter the Table to Add Columns
 ALTER TABLE scam_info ADD COLUMN victim_age_group VARCHAR(100);
 ALTER TABLE scam_info ADD COLUMN scam_duration VARCHAR(100);
 ALTER TABLE scam_info ADD COLUMN severity_level VARCHAR(100);
 ALTER TABLE scam_info ADD COLUMN legal_action_taken VARCHAR(100);
 ALTER TABLE scam_info ADD COLUMN detection_date VARCHAR(10);
 
--- Step 3: Rename Columns
 ALTER TABLE scam_info RENAME COLUMN scam_name TO full_scam_name;
 ALTER TABLE scam_info RENAME COLUMN scam_type TO category;
 ALTER TABLE scam_info RENAME COLUMN affected_population TO victims_count;
 ALTER TABLE scam_info RENAME COLUMN reported_date TO reporting_date;
 ALTER TABLE scam_info RENAME COLUMN perpetrator TO suspect;
 
--- Step 4: Modify Column Types
 ALTER TABLE scam_info MODIFY COLUMN financial_loss BIGINT;
 ALTER TABLE scam_info MODIFY COLUMN region VARCHAR(150);
 ALTER TABLE scam_info MODIFY COLUMN detection_date VARCHAR(10);
 
--- Step 5: Insert Data into the Table
 INSERT INTO scam_info VALUES 
 (1, 'Phishing Scam', 'Email', 50000, 2000000, 'Global', '2021-05-10', 'John Doe', 'Email Phishing', 'Investigation Ongoing', 'All Ages', '1 Month', 'High', 'Yes', '2021-05-15'),
 (2, 'Ponzi Scheme', 'Investment', 2000, 10000000, 'USA', '2019-08-20', 'Jane Smith', 'Investment Fraud', 'Arrests Made', 'Adults', '2 Years', 'Severe', 'Yes', '2019-08-25'),
@@ -355,7 +350,6 @@ INSERT INTO scam_info VALUES
 (19, 'Fake Rental Scam', 'Online', 4000, 1000000, 'UK', '2021-08-20', 'Oliver Brown', 'Fake Rental Listings', 'Arrests Made', 'All Ages', '2 Months', 'High', 'Yes', '2021-08-25'),
 (20, 'Grandparent Scam', 'Phone', 15000, 500000, 'USA', '2018-07-10', 'Anna Davis', 'Phone Call', 'Closed', 'Elderly', '1 Year', 'Medium', 'Yes', '2018-07-15');
 
--- Step 6: Update Data in the Table
 UPDATE scam_info
 SET financial_loss = 2500000, authority_response = 'Closed'
 WHERE scam_id = 1;
@@ -364,11 +358,8 @@ UPDATE scam_info
 SET category = 'Crypto Investment', legal_action_taken = 'No'
 WHERE scam_id = 2;
 
--- Step 7: Delete Rows
 DELETE FROM scam_info
 WHERE scam_id = 1;
-
--- Step 8: Select Specific Data
 SELECT * FROM scam_info
 WHERE victims_count > 1000 AND region = 'USA';
 
@@ -380,3 +371,140 @@ WHERE scam_id IN (2, 3, 4);
 
 SELECT * FROM scam_info
 WHERE scam_id NOT IN (5, 6, 7);
+
+
+Let's use real-world-like data to populate the tables and write the necessary SQL commands.
+
+## Step 1: Create Database
+sql
+CREATE DATABASE RTO;
+
+
+## Step 2: Create Tables
+sql
+USE RTO;
+
+CREATE TABLE LLR_INFO (
+    LLR_ID INT PRIMARY KEY,
+    NAME VARCHAR(50),
+    DOB DATE,
+    ADDRESS VARCHAR(100),
+    CONTACT_NUMBER VARCHAR(15),
+    EMAIL VARCHAR(50),
+    GENDER CHAR(1),
+    BLOOD_GROUP VARCHAR(3),
+    ISSUE_DATE DATE,
+    EXPIRY_DATE DATE
+);
+
+CREATE TABLE LLR_TEST_INFO (
+    LLR_ID INT,
+    TEST_ID INT PRIMARY KEY,
+    TEST_DATE DATE,
+    RESULT VARCHAR(10),
+    SCORE INT,
+    REMARKS VARCHAR(100),
+    EXAMINER_NAME VARCHAR(50),
+    TEST_CENTER VARCHAR(50),
+    NEXT_TEST_DATE DATE,
+    FOREIGN KEY (LLR_ID) REFERENCES LLR_INFO(LLR_ID)
+);
+
+CREATE TABLE DRIVING_LICENCE_INFO (
+    DL_ID INT PRIMARY KEY,
+    TEST_ID INT,
+    LLR_ID INT,
+    NAME VARCHAR(50),
+    DOB DATE,
+    ADDRESS VARCHAR(100),
+    CONTACT_NUMBER VARCHAR(15),
+    ISSUE_DATE DATE,
+    EXPIRY_DATE DATE,
+    LICENSE_TYPE VARCHAR(20),
+    FOREIGN KEY (TEST_ID) REFERENCES LLR_TEST_INFO(TEST_ID),
+    FOREIGN KEY (LLR_ID) REFERENCES LLR_INFO(LLR_ID)
+);
+
+CREATE TABLE DRIVING_LICENSE_TEST_INFO (
+    DL_ID INT,
+    TEST_DATE DATE,
+    RESULT VARCHAR(10),
+    SCORE INT,
+    REMARKS VARCHAR(100),
+    EXAMINER_NAME VARCHAR(50),
+    TEST_CENTER VARCHAR(50),
+    NEXT_TEST_DATE DATE,
+    FOREIGN KEY (DL_ID) REFERENCES DRIVING_LICENCE_INFO(DL_ID)
+);
+
+
+## Step 3: Insert Data
+sql
+-- Inserting data into LLR_INFO
+INSERT INTO LLR_INFO (LLR_ID, NAME, DOB, ADDRESS, CONTACT_NUMBER, EMAIL, GENDER, BLOOD_GROUP, ISSUE_DATE, EXPIRY_DATE)
+VALUES
+(1, 'John Doe', '1985-05-20', '123 Main St, Cityville', '555-1234', 'johndoe@example.com', 'M', 'O+', '2022-01-15', '2025-01-15'),
+(2, 'Jane Smith', '1990-08-15', '456 Oak St, Townsville', '555-5678', 'janesmith@example.com', 'F', 'A+', '2022-01-20', '2025-01-20'),
+-- Repeat for more records
+;
+
+-- Inserting data into LLR_TEST_INFO
+INSERT INTO LLR_TEST_INFO (LLR_ID, TEST_ID, TEST_DATE, RESULT, SCORE, REMARKS, EXAMINER_NAME, TEST_CENTER, NEXT_TEST_DATE)
+VALUES
+(1, 101, '2022-02-10', 'Pass', 85, 'Good performance', 'Examiner A', 'Cityville Center', NULL),
+(2, 102, '2022-02-15', 'Fail', 45, 'Needs improvement', 'Examiner B', 'Townsville Center', '2022-03-15'),
+-- Repeat for more records
+;
+
+-- Inserting data into DRIVING_LICENCE_INFO
+INSERT INTO DRIVING_LICENCE_INFO (DL_ID, TEST_ID, LLR_ID, NAME, DOB, ADDRESS, CONTACT_NUMBER, ISSUE_DATE, EXPIRY_DATE, LICENSE_TYPE)
+VALUES
+(1, 101, 1, 'John Doe', '1985-05-20', '123 Main St, Cityville', '555-1234', '2022-03-01', '2032-03-01', 'Car'),
+(2, 102, 2, 'Jane Smith', '1990-08-15', '456 Oak St, Townsville', '555-5678', '2022-04-01', '2032-04-01', 'Motorcycle'),
+-- Repeat for more records
+;
+
+-- Inserting data into DRIVING_LICENSE_TEST_INFO
+INSERT INTO DRIVING_LICENSE_TEST_INFO (DL_ID, TEST_DATE, RESULT, SCORE, REMARKS, EXAMINER_NAME, TEST_CENTER, NEXT_TEST_DATE)
+VALUES
+(1, '2022-02-20', 'Pass', 90, 'Excellent', 'Examiner A', 'Cityville Center', NULL),
+(2, '2022-04-15', 'Pass', 80, 'Good', 'Examiner B', 'Townsville Center', NULL),
+-- Repeat for more records
+;
+
+
+## Step 4: Insert or Update Query using ON DUPLICATE KEY
+sql
+-- For LLR_INFO
+INSERT INTO LLR_INFO (LLR_ID, NAME, DOB, ADDRESS, CONTACT_NUMBER, EMAIL, GENDER, BLOOD_GROUP, ISSUE_DATE, EXPIRY_DATE)
+VALUES (1, 'John Doe', '1985-05-20', '123 Main St, Cityville', '555-1234', 'johndoe@example.com', 'M', 'O+', '2022-01-15', '2025-01-15')
+ON DUPLICATE KEY UPDATE
+NAME=VALUES(NAME), DOB=VALUES(DOB), ADDRESS=VALUES(ADDRESS), CONTACT_NUMBER=VALUES(CONTACT_NUMBER), EMAIL=VALUES(EMAIL), GENDER=VALUES(GENDER), BLOOD_GROUP=VALUES(BLOOD_GROUP), ISSUE_DATE=VALUES(ISSUE_DATE), EXPIRY_DATE=VALUES(EXPIRY_DATE);
+
+-- Repeat similarly for the other tables: LLR_TEST_INFO, DRIVING_LICENCE_INFO, DRIVING_LICENSE_TEST_INFO
+
+
+## Step 5: Replace Into Query
+sql
+-- For LLR_INFO
+REPLACE INTO LLR_INFO (LLR_ID, NAME, DOB, ADDRESS, CONTACT_NUMBER, EMAIL, GENDER, BLOOD_GROUP, ISSUE_DATE, EXPIRY_DATE)
+VALUES (1, 'John Doe', '1985-05-20', '123 Main St, Cityville', '555-1234', 'johndoe@example.com', 'M', 'O+', '2022-01-15', '2025-01-15');
+
+-- Repeat similarly for the other tables: LLR_TEST_INFO, DRIVING_LICENCE_INFO, DRIVING_LICENSE_TEST_INFO
+
+
+These SQL commands create the necessary tables, insert real-world-like data, and include the requested queries to update or replace data in the tables.
+
+
+INSERT INTO DRIVING_LICENSE_TEST_INFO (DL_ID, TEST_DATE, RESULT, SCORE, REMARKS, EXAMINER_NAME, TEST_CENTER, NEXT_TEST_DATE)
+VALUES
+(11, '2022-03-10', 'Pass', 70, 'Fair', 'Examiner K', 'Villagebottom Center', NULL),
+(12, '2022-03-15', 'Fail', 35, 'Needs improvement', 'Examiner L', 'Hamletbottom Center', '2022-04-15'),
+(13, '2022-03-20', 'Pass', 80, 'Good', 'Examiner M', 'Citycenter Center', NULL),
+(14, '2022-03-25', 'Pass', 75, 'Satisfactory', 'Examiner N', 'Towncenter Center', NULL),
+(15, '2022-03-30', 'Fail', 45, 'Needs improvement', 'Examiner O', 'Villagecenter Center', '2022-04-30'),
+(16, '2022-04-01', 'Pass', 85, 'Good', 'Examiner P', 'Hamletcenter Center', NULL),
+(17, '2022-04-05', 'Pass', 90, 'Excellent', 'Examiner Q', 'Cityeast Center', NULL),
+(18, '2022-04-10', 'Pass', 80, 'Good', 'Examiner R', 'Towneast Center', NULL),
+(19, '2022-04-15', 'Fail', 55, 'Needs improvement', 'Examiner S', 'Villageeast Center', '2022-05-15'),
+(20, '2022-04-20', 'Pass', 88, 'Excellent', 'Examiner T', 'Hamleteast Center', NULL);
