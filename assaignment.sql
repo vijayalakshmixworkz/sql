@@ -373,17 +373,8 @@ SELECT * FROM scam_info
 WHERE scam_id NOT IN (5, 6, 7);
 
 
-Let's use real-world-like data to populate the tables and write the necessary SQL commands.
 
-## Step 1: Create Database
-sql
 CREATE DATABASE RTO;
-
-
-## Step 2: Create Tables
-sql
-USE RTO;
-
 CREATE TABLE LLR_INFO (
     LLR_ID INT PRIMARY KEY,
     NAME VARCHAR(50),
@@ -438,33 +429,21 @@ CREATE TABLE DRIVING_LICENSE_TEST_INFO (
 );
 
 
-## Step 3: Insert Data
-sql
--- Inserting data into LLR_INFO
 INSERT INTO LLR_INFO (LLR_ID, NAME, DOB, ADDRESS, CONTACT_NUMBER, EMAIL, GENDER, BLOOD_GROUP, ISSUE_DATE, EXPIRY_DATE)
 VALUES
 (1, 'John Doe', '1985-05-20', '123 Main St, Cityville', '555-1234', 'johndoe@example.com', 'M', 'O+', '2022-01-15', '2025-01-15'),
-(2, 'Jane Smith', '1990-08-15', '456 Oak St, Townsville', '555-5678', 'janesmith@example.com', 'F', 'A+', '2022-01-20', '2025-01-20'),
--- Repeat for more records
-;
+(2, 'Jane Smith', '1990-08-15', '456 Oak St, Townsville', '555-5678', 'janesmith@example.com', 'F', 'A+', '2022-01-20', '2025-01-20');
 
--- Inserting data into LLR_TEST_INFO
 INSERT INTO LLR_TEST_INFO (LLR_ID, TEST_ID, TEST_DATE, RESULT, SCORE, REMARKS, EXAMINER_NAME, TEST_CENTER, NEXT_TEST_DATE)
 VALUES
 (1, 101, '2022-02-10', 'Pass', 85, 'Good performance', 'Examiner A', 'Cityville Center', NULL),
-(2, 102, '2022-02-15', 'Fail', 45, 'Needs improvement', 'Examiner B', 'Townsville Center', '2022-03-15'),
--- Repeat for more records
-;
+(2, 102, '2022-02-15', 'Fail', 45, 'Needs improvement', 'Examiner B', 'Townsville Center', '2022-03-15');
 
--- Inserting data into DRIVING_LICENCE_INFO
 INSERT INTO DRIVING_LICENCE_INFO (DL_ID, TEST_ID, LLR_ID, NAME, DOB, ADDRESS, CONTACT_NUMBER, ISSUE_DATE, EXPIRY_DATE, LICENSE_TYPE)
 VALUES
 (1, 101, 1, 'John Doe', '1985-05-20', '123 Main St, Cityville', '555-1234', '2022-03-01', '2032-03-01', 'Car'),
-(2, 102, 2, 'Jane Smith', '1990-08-15', '456 Oak St, Townsville', '555-5678', '2022-04-01', '2032-04-01', 'Motorcycle'),
--- Repeat for more records
-;
+(2, 102, 2, 'Jane Smith', '1990-08-15', '456 Oak St, Townsville', '555-5678', '2022-04-01', '2032-04-01', 'Motorcycle');
 
--- Inserting data into DRIVING_LICENSE_TEST_INFO
 INSERT INTO DRIVING_LICENSE_TEST_INFO (DL_ID, TEST_DATE, RESULT, SCORE, REMARKS, EXAMINER_NAME, TEST_CENTER, NEXT_TEST_DATE)
 VALUES
 (1, '2022-02-20', 'Pass', 90, 'Excellent', 'Examiner A', 'Cityville Center', NULL),
@@ -473,27 +452,14 @@ VALUES
 ;
 
 
-## Step 4: Insert or Update Query using ON DUPLICATE KEY
-sql
--- For LLR_INFO
 INSERT INTO LLR_INFO (LLR_ID, NAME, DOB, ADDRESS, CONTACT_NUMBER, EMAIL, GENDER, BLOOD_GROUP, ISSUE_DATE, EXPIRY_DATE)
 VALUES (1, 'John Doe', '1985-05-20', '123 Main St, Cityville', '555-1234', 'johndoe@example.com', 'M', 'O+', '2022-01-15', '2025-01-15')
 ON DUPLICATE KEY UPDATE
 NAME=VALUES(NAME), DOB=VALUES(DOB), ADDRESS=VALUES(ADDRESS), CONTACT_NUMBER=VALUES(CONTACT_NUMBER), EMAIL=VALUES(EMAIL), GENDER=VALUES(GENDER), BLOOD_GROUP=VALUES(BLOOD_GROUP), ISSUE_DATE=VALUES(ISSUE_DATE), EXPIRY_DATE=VALUES(EXPIRY_DATE);
 
--- Repeat similarly for the other tables: LLR_TEST_INFO, DRIVING_LICENCE_INFO, DRIVING_LICENSE_TEST_INFO
 
-
-## Step 5: Replace Into Query
-sql
--- For LLR_INFO
 REPLACE INTO LLR_INFO (LLR_ID, NAME, DOB, ADDRESS, CONTACT_NUMBER, EMAIL, GENDER, BLOOD_GROUP, ISSUE_DATE, EXPIRY_DATE)
 VALUES (1, 'John Doe', '1985-05-20', '123 Main St, Cityville', '555-1234', 'johndoe@example.com', 'M', 'O+', '2022-01-15', '2025-01-15');
-
--- Repeat similarly for the other tables: LLR_TEST_INFO, DRIVING_LICENCE_INFO, DRIVING_LICENSE_TEST_INFO
-
-
-These SQL commands create the necessary tables, insert real-world-like data, and include the requested queries to update or replace data in the tables.
 
 
 INSERT INTO DRIVING_LICENSE_TEST_INFO (DL_ID, TEST_DATE, RESULT, SCORE, REMARKS, EXAMINER_NAME, TEST_CENTER, NEXT_TEST_DATE)
