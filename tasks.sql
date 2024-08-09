@@ -84,6 +84,36 @@ SELECT CONCAT(Make, ' ', Model) AS FullName FROM Cars;
 SELECT Make, LENGTH(Make) AS MakeLength FROM Cars;
 
 CREATE INDEX idx_make ON Cars(Make);
-
 SELECT * FROM Cars WHERE Make = 'Toyota';
 
+
+===================================================================================================================================
+use things;
+create table cafe(
+id int,
+cafe_name varchar(20),
+contact bigint,
+email_id varchar(30),
+cafe_owner varchar(30),
+no_of_staff int
+);
+INSERT INTO cafe VALUES (1, 'Brew Bliss', 9876543210, 'contact@brewbliss.com', 'Arjun Kumar', 8);
+INSERT INTO cafe VALUES(2, 'Coffee Craze', 9876543211, 'info@coffeecraze.in', 'Priya Sharma', 6);
+INSERT INTO cafe VALUES(3, 'Java Jolt', 9876543212, 'hello@javajolt.in', 'Vikas Singh', 10);
+INSERT INTO cafe VALUES(4, 'Chai & Coffee', 9876543213, 'contact@chaicoffee.com', 'Neha Patil', 5);
+INSERT INTO cafe VALUES(5, 'Caffeine Kick', 9876543214, 'support@caffeinekick.com', 'Ravi Desai', 7);
+INSERT INTO cafe VALUES(6, 'Mocha Moments', 9876543215, 'hello@mochamoments.com', 'Aditi Rao', 9);
+INSERT INTO cafe VALUES(7, 'Cafe Delight', 9876543216, 'contact@cafedelight.in', 'Rohit Joshi', 4);
+INSERT INTO cafe VALUES(8, 'Espresso Express', 9876543217, 'info@espressoexpress.in', 'Sneha Mehta', 5);
+INSERT INTO cafe VALUES(9, 'Latte Love', 9876543218, 'hello@lattelove.com', 'Aman Kumar', 6);
+INSERT INTO cafe VALUES(10, 'Bistro Brews', 9876543219, 'contact@bistrobrews.com', 'Anjali Nair', 7);
+INSERT INTO cafe VALUES(11, 'Brew Bliss', 9876543210, 'contact@brewbliss.com', 'Arjun Kumar', 8);
+INSERT INTO cafe VALUES(12, 'Bean Bites', 9876543220, 'info@beanbites.in', 'Karan Kapoor', 5);
+INSERT INTO cafe VALUES(13, 'Cuppa Charm', 9876543221, 'hello@cuppacharm.com', 'Meera Singh', 6);
+INSERT INTO cafe VALUES(14, 'Sip & Savor', 9876543222, 'contact@sipandsavor.in', 'Rajesh Gupta', 8);
+INSERT INTO cafe VALUES(15, 'Perk Up Cafe', 9876543223, 'support@perkucafe.com', 'Pooja Sharma', 9);
+INSERT INTO cafe VALUES(16, 'Steamy Cups', 9876543224, 'info@steamycups.in', 'Akash Jain', 7);
+INSERT INTO cafe VALUES(17, 'Bean There', 9876543225, 'hello@beanthere.in', 'Vivek Reddy', 5);
+INSERT INTO cafe VALUES(18, 'Java Junction', 9876543226, 'contact@javajunction.in', 'Sanjay Verma', 6);
+INSERT INTO cafe VALUES(19, 'Choco Cafe', 9876543227, 'info@chococafe.in', 'Tanya Rao', 4);
+INSERT INTO cafe VALUES(20, 'Mocha Moments', 9876543215, 'hello@mochamoments.com', 'Aditi Rao', 9); 
