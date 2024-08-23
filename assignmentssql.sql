@@ -1,0 +1,436 @@
+use things;
+
+CREATE TABLE PaymentMethods (
+    PaymentMethodID BIGINT PRIMARY KEY,
+    MethodName VARCHAR(100),
+    Description TEXT,
+    IsActive BOOLEAN,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CustomerID BIGINT,
+    ExpirationDate DATE,
+    CardNumber VARCHAR(16),
+    CardHolderName VARCHAR(100),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+INSERT INTO PaymentMethods VALUES(2, 'MasterCard', 'Business credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2, '2024-11-30', '5500000000000004', 'Asha Patel');
+INSERT INTO PaymentMethods VALUES(3, 'American Express', 'Rewards credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 3, '2026-01-31', '340000000000009', 'Vikram Singh');
+INSERT INTO PaymentMethods VALUES(4, 'Discover', 'Travel credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 4, '2023-09-30', '6011000000000004', 'Neha Sharma');
+INSERT INTO PaymentMethods VALUES(5, 'Visa', 'Backup credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 5, '2027-08-31', '4111111111111112', 'Arjun Reddy');
+INSERT INTO PaymentMethods VALUES(6, 'MasterCard', 'Corporate credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 6, '2025-07-31', '5500000000000005', 'Meera Nair');
+INSERT INTO PaymentMethods VALUES(7, 'American Express', 'Platinum credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 7, '2026-06-30', '340000000000010', 'Rajesh Gupta');
+INSERT INTO PaymentMethods VALUES(8, 'Discover', 'Cashback credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 8, '2024-05-31', '6011000000000005', 'Pooja Desai');
+INSERT INTO PaymentMethods VALUES(9, 'Visa', 'Gold credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 9, '2023-04-30', '4111111111111113', 'Sanjay Iyer');
+INSERT INTO PaymentMethods VALUES(10, 'MasterCard', 'Silver credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 10, '2026-03-31', '5500000000000006', 'Kavita Joshi');
+INSERT INTO PaymentMethods VALUES(11, 'American Express', 'Elite credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11, '2025-02-28', '340000000000011', 'Amitabh Pandey');
+INSERT INTO PaymentMethods VALUES(12, 'Discover', 'Student credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 12, '2024-01-31', '6011000000000006', 'Anjali Kapoor');
+INSERT INTO PaymentMethods VALUES(13, 'Visa', 'Travel credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13, '2027-12-31', '4111111111111114', 'Gaurav Thakur');
+INSERT INTO PaymentMethods VALUES(14, 'MasterCard', 'Prepaid credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 14, '2026-11-30', '5500000000000007', 'Lakshmi Menon');
+INSERT INTO PaymentMethods VALUES(15, 'American Express', 'Blue credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 15, '2025-10-31', '340000000000012', 'Suresh Rao');
+INSERT INTO PaymentMethods VALUES(16, 'Discover', 'Gold credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 16, '2024-09-30', '6011000000000007', 'Priya Chawla');
+INSERT INTO PaymentMethods VALUES(17, 'Visa', 'Platinum credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 17, '2023-08-31', '4111111111111115', 'Manoj Kulkarni');
+INSERT INTO PaymentMethods VALUES(18, 'MasterCard', 'Black credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 18, '2026-07-31', '5500000000000008', 'Rina Bose');
+INSERT INTO PaymentMethods VALUES(19, 'American Express', 'Gold credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 19, '2025-06-30', '340000000000013', 'Vivek Mehta');
+INSERT INTO PaymentMethods VALUES(20, 'Discover', 'Silver credit card', TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 20, '2024-05-31', '6011000000000008', 'Anita Roy');
+
+CREATE TABLE Invoices (
+    InvoiceID BIGINT PRIMARY KEY,
+    OrderID BIGINT,
+    InvoiceDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    DueDate DATE,
+    PaymentStatus VARCHAR(50),
+    Amount DECIMAL(10, 2),
+    Tax DECIMAL(10, 2),
+    Shipping DECIMAL(10, 2),
+    Total DECIMAL(10, 2),
+    CustomerID BIGINT,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+INSERT INTO Invoices VALUES
+(1, 101, CURRENT_TIMESTAMP, '2024-08-31', 'Paid', 1500.00, 135.00, 50.00, 1685.00, 1);
+INSERT INTO Invoices VALUES
+(2, 102, CURRENT_TIMESTAMP, '2024-09-01', 'Pending', 2500.00, 225.00, 75.00, 2800.00, 2);
+INSERT INTO Invoices VALUES
+(3, 103, CURRENT_TIMESTAMP, '2024-08-25', 'Paid', 1200.00, 108.00, 40.00, 1348.00, 3);
+INSERT INTO Invoices VALUES
+(4, 104, CURRENT_TIMESTAMP, '2024-09-05', 'Overdue', 3200.00, 288.00, 100.00, 3588.00, 4);
+INSERT INTO Invoices VALUES
+(5, 105, CURRENT_TIMESTAMP, '2024-09-10', 'Paid', 1750.00, 157.50, 60.00, 1967.50, 5);
+INSERT INTO Invoices VALUES
+(6, 106, CURRENT_TIMESTAMP, '2024-08-20', 'Pending', 2900.00, 261.00, 90.00, 3251.00, 6);
+INSERT INTO Invoices VALUES
+(7, 107, CURRENT_TIMESTAMP, '2024-08-28', 'Paid', 4500.00, 405.00, 150.00, 5055.00, 7);
+INSERT INTO Invoices VALUES
+(8, 108, CURRENT_TIMESTAMP, '2024-09-12', 'Pending', 2100.00, 189.00, 70.00, 2359.00, 8);
+INSERT INTO Invoices VALUES
+(9, 109, CURRENT_TIMESTAMP, '2024-08-30', 'Overdue', 1100.00, 99.00, 35.00, 1234.00, 9);
+INSERT INTO Invoices VALUES
+(10, 110, CURRENT_TIMESTAMP, '2024-09-03', 'Paid', 3800.00, 342.00, 120.00, 4262.00, 10);
+INSERT INTO Invoices VALUES
+(11, 111, CURRENT_TIMESTAMP, '2024-08-22', 'Pending', 1300.00, 117.00, 45.00, 1462.00, 11);
+INSERT INTO Invoices VALUES
+(12, 112, CURRENT_TIMESTAMP, '2024-09-07', 'Paid', 5000.00, 450.00, 170.00, 5620.00, 12);
+INSERT INTO Invoices VALUES
+(13, 113, CURRENT_TIMESTAMP, '2024-08-26', 'Overdue', 2200.00, 198.00, 80.00, 2478.00, 13);
+INSERT INTO Invoices VALUES
+(14, 114, CURRENT_TIMESTAMP, '2024-09-11', 'Pending', 1400.00, 126.00, 50.00, 1576.00, 14);
+INSERT INTO Invoices VALUES
+(15, 115, CURRENT_TIMESTAMP, '2024-08-19', 'Paid', 3300.00, 297.00, 105.00, 3702.00, 15);
+INSERT INTO Invoices VALUES
+(16, 116, CURRENT_TIMESTAMP, '2024-09-06', 'Overdue', 2600.00, 234.00, 90.00, 2924.00, 16);
+INSERT INTO Invoices VALUES
+(17, 117, CURRENT_TIMESTAMP, '2024-08-24', 'Paid', 3900.00, 351.00, 130.00, 4381.00, 17);
+INSERT INTO Invoices VALUES
+(18, 118, CURRENT_TIMESTAMP, '2024-09-08', 'Pending', 2800.00, 252.00, 100.00, 3152.00, 18);
+INSERT INTO Invoices VALUES
+(19, 119, CURRENT_TIMESTAMP, '2024-08-21', 'Paid', 1600.00, 144.00, 55.00, 1799.00, 19);
+INSERT INTO Invoices VALUES
+(20, 120, CURRENT_TIMESTAMP, '2024-09-02', 'Overdue', 2700.00, 243.00, 95.00, 3038.00, 20);
+CREATE TABLE Reviews (
+    ReviewID BIGINT PRIMARY KEY,
+    ProductID BIGINT,
+    CustomerID BIGINT,
+    Rating INT,
+    ReviewText TEXT,
+    ReviewDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    IsVerifiedPurchase BOOLEAN,
+    HelpfulnessVotes INT,
+    ReportedCount INT,
+    Status VARCHAR(50),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+INSERT INTO Reviews VALUES
+(1, 201, 1, 5, 'Excellent product, highly recommend!', CURRENT_TIMESTAMP, TRUE, 15, 0, 'Approved');
+INSERT INTO Reviews VALUES
+(2, 202, 2, 4, 'Good quality, but delivery was late.', CURRENT_TIMESTAMP, TRUE, 10, 1, 'Approved');
+INSERT INTO Reviews VALUES
+(3, 203, 3, 3, 'Average product, expected better.', CURRENT_TIMESTAMP, FALSE, 8, 2, 'Approved');
+INSERT INTO Reviews VALUES
+(4, 204, 4, 5, 'Worth every penny!', CURRENT_TIMESTAMP, TRUE, 20, 0, 'Approved');
+INSERT INTO Reviews VALUES
+(5, 205, 5, 2, 'Not satisfied with the purchase.', CURRENT_TIMESTAMP, FALSE, 5, 3, 'Under Review');
+INSERT INTO Reviews VALUES
+(6, 206, 6, 4, 'Good value for money.', CURRENT_TIMESTAMP, TRUE, 12, 0, 'Approved');
+INSERT INTO Reviews VALUES
+(7, 207, 7, 5, 'Highly recommend this product!', CURRENT_TIMESTAMP, TRUE, 18, 0, 'Approved');
+INSERT INTO Reviews VALUES
+(8, 208, 8, 3, 'It’s okay, not great.', CURRENT_TIMESTAMP, FALSE, 7, 1, 'Approved');
+INSERT INTO Reviews VALUES
+(9, 209, 9, 4, 'Satisfied with the purchase.', CURRENT_TIMESTAMP, TRUE, 13, 0, 'Approved');
+INSERT INTO Reviews VALUES
+(10, 210, 10, 1, 'Poor quality, would not buy again.', CURRENT_TIMESTAMP, FALSE, 3, 5, 'Under Review');
+INSERT INTO Reviews VALUES
+(11, 211, 11, 5, 'Exceeded expectations!', CURRENT_TIMESTAMP, TRUE, 16, 0, 'Approved');
+INSERT INTO Reviews VALUES
+(12, 212, 12, 4, 'Happy with the product.', CURRENT_TIMESTAMP, TRUE, 14, 0, 'Approved');
+INSERT INTO Reviews VALUES
+(13, 213, 13, 2, 'Not worth the price.', CURRENT_TIMESTAMP, FALSE, 6, 2, 'Approved');
+INSERT INTO Reviews VALUES
+(14, 214, 14, 3, 'Decent, but could be better.', CURRENT_TIMESTAMP, FALSE, 9, 1, 'Approved');
+INSERT INTO Reviews VALUES
+(15, 215, 15, 5, 'Loved it, highly recommend!', CURRENT_TIMESTAMP, TRUE, 17, 0, 'Approved');
+INSERT INTO Reviews VALUES
+(16, 216, 16, 4, 'Good purchase overall.', CURRENT_TIMESTAMP, TRUE, 11, 0, 'Approved');
+INSERT INTO Reviews VALUES
+(17, 217, 17, 3, 'Not bad, but not great either.', CURRENT_TIMESTAMP, FALSE, 8, 1, 'Approved');
+INSERT INTO Reviews VALUES
+(18, 218, 18, 5, 'Fantastic product!', CURRENT_TIMESTAMP, TRUE, 19, 0, 'Approved');
+INSERT INTO Reviews VALUES
+(19, 219, 19, 2, 'Disappointed with the quality.', CURRENT_TIMESTAMP, FALSE, 4, 4, 'Under Review');
+INSERT INTO Reviews VALUES
+(20, 220, 20, 4, 'Overall, a good product.', CURRENT_TIMESTAMP, TRUE, 10, 0, 'Approved');
+
+CREATE TABLE CartItems (
+    CartItemID BIGINT PRIMARY KEY,
+    CustomerID BIGINT,
+    ProductID BIGINT,
+    Quantity INT,
+    UnitPrice DECIMAL(10, 2),
+    DateAdded TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    DateModified TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    IsSavedForLater BOOLEAN,
+    CartID BIGINT,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+INSERT INTO CartItems VALUES
+(1, 1, 201, 2, 150.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 101);
+INSERT INTO CartItems VALUES
+(2, 2, 202, 1, 250.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE, 102);
+INSERT INTO CartItems VALUES
+(3, 3, 203, 3, 100.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 103);
+INSERT INTO CartItems VALUES
+(4, 4, 204, 1, 500.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 104);
+INSERT INTO CartItems VALUES
+(5, 5, 205, 2, 75.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE, 105);
+INSERT INTO CartItems VALUES
+(6, 6, 206, 1, 120.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 106);
+INSERT INTO CartItems VALUES
+(7, 7, 207, 4, 80.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 107);
+INSERT INTO CartItems VALUES
+(8, 8, 208, 2, 200.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE, 108);
+INSERT INTO CartItems VALUES
+(9, 9, 209, 1, 350.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 109);
+INSERT INTO CartItems VALUES
+(10, 10, 210, 3, 90.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 110);
+INSERT INTO CartItems VALUES
+(11, 11, 211, 1, 180.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE, 111);
+INSERT INTO CartItems VALUES
+(12, 12, 212, 2, 130.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 112);
+INSERT INTO CartItems VALUES
+(13, 13, 213, 1, 400.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE, 113);
+INSERT INTO CartItems VALUES
+(14, 14, 214, 5, 60.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 114);
+INSERT INTO CartItems VALUES
+(15, 15, 215, 2, 210.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE, 115);
+INSERT INTO CartItems VALUES
+(16, 16, 216, 1, 300.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 116);
+INSERT INTO CartItems VALUES
+(17, 17, 217, 3, 70.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 117);
+INSERT INTO CartItems VALUES
+(18, 18, 218, 1, 270.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE, 118);
+INSERT INTO CartItems VALUES
+(19, 19, 219, 4, 140.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, FALSE, 119);
+INSERT INTO CartItems VALUES
+(20, 20, 220, 2, 160.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, TRUE, 120);
+
+CREATE TABLE Wishlists (
+    WishlistID BIGINT PRIMARY KEY,
+    CustomerID BIGINT,
+    WishlistName VARCHAR(100),
+    DateCreated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    IsPublic BOOLEAN,
+    ProductCount INT,
+    LastUpdated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    IsArchived BOOLEAN,
+    SharedWith VARCHAR(255),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+INSERT INTO Wishlists VALUES
+(1, 1, 'Birthday Wishlist', CURRENT_TIMESTAMP, TRUE, 5, CURRENT_TIMESTAMP, FALSE, 'ajay@example.com');
+INSERT INTO Wishlists VALUES
+(2, 2, 'Diwali Gifts', CURRENT_TIMESTAMP, FALSE, 3, CURRENT_TIMESTAMP, FALSE, NULL);
+INSERT INTO Wishlists VALUES
+(3, 3, 'Tech Gadgets', CURRENT_TIMESTAMP, TRUE, 7, CURRENT_TIMESTAMP, FALSE, 'rahul@example.com,neha@example.com');
+INSERT INTO Wishlists VALUES
+(4, 4, 'Home Decor', CURRENT_TIMESTAMP, FALSE, 6, CURRENT_TIMESTAMP, TRUE, 'suman@example.com');
+INSERT INTO Wishlists VALUES
+(5, 5, 'Fashion Accessories', CURRENT_TIMESTAMP, TRUE, 10, CURRENT_TIMESTAMP, FALSE, NULL);
+INSERT INTO Wishlists VALUES
+(6, 6, 'Travel Essentials', CURRENT_TIMESTAMP, TRUE, 8, CURRENT_TIMESTAMP, TRUE, 'manish@example.com,deepa@example.com');
+INSERT INTO Wishlists VALUES
+(7, 7, 'Fitness Gear', CURRENT_TIMESTAMP, FALSE, 4, CURRENT_TIMESTAMP, FALSE, NULL);
+INSERT INTO Wishlists VALUES
+(8, 8, 'Books to Read', CURRENT_TIMESTAMP, TRUE, 12, CURRENT_TIMESTAMP, FALSE, 'priya@example.com');
+INSERT INTO Wishlists VALUES
+(9, 9, 'Music Instruments', CURRENT_TIMESTAMP, FALSE, 2, CURRENT_TIMESTAMP, TRUE, 'anil@example.com');
+INSERT INTO Wishlists VALUES
+(10, 10, 'Cooking Equipment', CURRENT_TIMESTAMP, TRUE, 9, CURRENT_TIMESTAMP, FALSE, NULL);
+INSERT INTO Wishlists VALUES
+(11, 11, 'Gaming Consoles', CURRENT_TIMESTAMP, FALSE, 5, CURRENT_TIMESTAMP, TRUE, 'vikas@example.com');
+INSERT INTO Wishlists VALUES
+(12, 12, 'Smart Home Devices', CURRENT_TIMESTAMP, TRUE, 11, CURRENT_TIMESTAMP, FALSE, 'meena@example.com');
+INSERT INTO Wishlists VALUES
+(13, 13, 'Gardening Tools', CURRENT_TIMESTAMP, FALSE, 3, CURRENT_TIMESTAMP, FALSE, NULL);
+INSERT INTO Wishlists VALUES
+(14, 14, 'Automotive Accessories', CURRENT_TIMESTAMP, TRUE, 7, CURRENT_TIMESTAMP, FALSE, 'rohit@example.com');
+INSERT INTO Wishlists VALUES
+(15, 15, 'Pet Supplies', CURRENT_TIMESTAMP, FALSE, 6, CURRENT_TIMESTAMP, TRUE, 'anjali@example.com');
+INSERT INTO Wishlists VALUES
+(16, 16, 'Stationery', CURRENT_TIMESTAMP, TRUE, 9, CURRENT_TIMESTAMP, FALSE, NULL);
+INSERT INTO Wishlists VALUES
+(17, 17, 'Wedding Gifts', CURRENT_TIMESTAMP, FALSE, 4, CURRENT_TIMESTAMP, FALSE, 'divya@example.com');
+INSERT INTO Wishlists VALUES
+(18, 18, 'Kids Toys', CURRENT_TIMESTAMP, TRUE, 8, CURRENT_TIMESTAMP, TRUE, 'gopal@example.com');
+INSERT INTO Wishlists VALUES
+(19, 19, 'Luxury Items', CURRENT_TIMESTAMP, FALSE, 10, CURRENT_TIMESTAMP, FALSE, 'suresh@example.com');
+INSERT INTO Wishlists VALUES
+(20, 20, 'Eco-Friendly Products', CURRENT_TIMESTAMP, TRUE, 7, CURRENT_TIMESTAMP, FALSE, NULL);
+
+CREATE TABLE ShippingMethods (
+    ShippingMethodID BIGINT PRIMARY KEY,
+    MethodName VARCHAR(100),
+    Description TEXT,
+    Cost DECIMAL(10, 2),
+    DeliveryTime INT,
+    IsActive BOOLEAN,
+    CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UpdatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ShipperID BIGINT,
+    FOREIGN KEY (ShipperID) REFERENCES Shippers(ShipperID)
+);
+INSERT INTO ShippingMethods VALUES
+(1, 'Standard Shipping', 'Delivery within 5-7 business days', 50.00, 7, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1);
+INSERT INTO ShippingMethods VALUES
+(2, 'Express Shipping', 'Delivery within 2-3 business days', 120.00, 3, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 2);
+INSERT INTO ShippingMethods VALUES
+(3, 'Next-Day Delivery', 'Delivery by next business day', 200.00, 1, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 3);
+INSERT INTO ShippingMethods VALUES
+(4, 'Two-Day Shipping', 'Delivery within 2 business days', 150.00, 2, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 4);
+INSERT INTO ShippingMethods VALUES
+(5, 'Economy Shipping', 'Delivery within 7-10 business days', 30.00, 10, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 5);
+INSERT INTO ShippingMethods VALUES
+(6, 'Same-Day Delivery', 'Delivery within the same day', 250.00, 1, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 6);
+INSERT INTO ShippingMethods VALUES
+(7, 'Overnight Shipping', 'Delivery by the next morning', 180.00, 1, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 7);
+INSERT INTO ShippingMethods VALUES
+(8, 'International Shipping', 'Delivery within 10-15 business days', 300.00, 15, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 8);
+INSERT INTO ShippingMethods VALUES
+(9, 'Local Delivery', 'Delivery within the same city', 40.00, 1, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 9);
+INSERT INTO ShippingMethods VALUES
+(10, 'Priority Shipping', 'Delivery within 4 business days', 90.00, 4, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 10);
+INSERT INTO ShippingMethods VALUES
+(11, 'Rush Shipping', 'Delivery within 24 hours', 220.00, 1, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 11);
+INSERT INTO ShippingMethods VALUES
+(12, 'Scheduled Delivery', 'Delivery at a scheduled time', 160.00, 1, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 12);
+INSERT INTO ShippingMethods VALUES
+(13, 'Freight Shipping', 'Delivery for large shipments', 500.00, 20, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 13);
+INSERT INTO ShippingMethods VALUES
+(14, 'Hand Delivery', 'Delivery by hand to specified recipient', 250.00, 1, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 14);
+INSERT INTO ShippingMethods VALUES
+(15, 'Green Shipping', 'Eco-friendly delivery option', 70.00, 7, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 15);
+INSERT INTO ShippingMethods VALUES
+(16, 'Bulk Shipping', 'Delivery for bulk orders', 400.00, 15, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 16);
+INSERT INTO ShippingMethods VALUES
+(17, 'Scheduled Express', 'Express delivery at a scheduled time', 140.00, 2, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 17);
+INSERT INTO ShippingMethods VALUES
+(18, 'Premium Shipping', 'Fastest delivery option', 250.00, 1, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 18);
+INSERT INTO ShippingMethods VALUES
+(19, 'Courier Service', 'Delivery via local courier', 60.00, 2, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 19);
+INSERT INTO ShippingMethods VALUES
+(20, 'Special Handling', 'Delivery with special handling requirements', 300.00, 5, TRUE, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 20);
+
+CREATE TABLE Returns (
+    ReturnID BIGINT PRIMARY KEY,
+    OrderID BIGINT,
+    ProductID BIGINT,
+    CustomerID BIGINT,
+    ReturnDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Reason VARCHAR(255),
+    Status VARCHAR(50),
+    RefundAmount DECIMAL(10, 2),
+    ReturnShippingCost DECIMAL(10, 2),
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+INSERT INTO Returns VALUES
+(1, 101, 201, 1, CURRENT_TIMESTAMP, 'Defective item', 'Processed', 150.00, 20.00);
+INSERT INTO Returns VALUES
+(2, 102, 202, 2, CURRENT_TIMESTAMP, 'Wrong item received', 'Pending', 250.00, 30.00);
+INSERT INTO Returns VALUES
+(3, 103, 203, 3, CURRENT_TIMESTAMP, 'Item not as described', 'Completed', 100.00, 15.00);
+INSERT INTO Returns VALUES
+(4, 104, 204, 4, CURRENT_TIMESTAMP, 'Damaged during shipping', 'Processed', 500.00, 25.00);
+INSERT INTO Returns VALUES
+(5, 105, 205, 5, CURRENT_TIMESTAMP, 'Changed mind', 'Pending', 75.00, 10.00);
+INSERT INTO Returns VALUES
+(6, 106, 206, 6, CURRENT_TIMESTAMP, 'Item missing parts', 'Completed', 120.00, 18.00);
+INSERT INTO Returns VALUES
+(7, 107, 207, 7, CURRENT_TIMESTAMP, 'Product arrived late', 'Processed', 80.00, 12.00);
+INSERT INTO Returns VALUES
+(8, 108, 208, 8, CURRENT_TIMESTAMP, 'Quality issues', 'Pending', 200.00, 20.00);
+INSERT INTO Returns VALUES
+(9, 109, 209, 9, CURRENT_TIMESTAMP, 'Incorrect size', 'Completed', 350.00, 22.00);
+INSERT INTO Returns VALUES
+(10, 110, 210, 10, CURRENT_TIMESTAMP, 'Order error', 'Processed', 90.00, 8.00);
+INSERT INTO Returns VALUES
+(11, 111, 211, 11, CURRENT_TIMESTAMP, 'Defective item', 'Completed', 180.00, 20.00);
+INSERT INTO Returns VALUES
+(12, 112, 212, 12, CURRENT_TIMESTAMP, 'Not satisfied with quality', 'Pending', 130.00, 15.00);
+INSERT INTO Returns VALUES
+(13, 113, 213, 13, CURRENT_TIMESTAMP, 'Wrong item received', 'Processed', 400.00, 25.00);
+INSERT INTO Returns VALUES
+(14, 114, 214, 14, CURRENT_TIMESTAMP, 'Changed mind', 'Completed', 60.00, 10.00);
+INSERT INTO Returns VALUES
+(15, 115, 215, 15, CURRENT_TIMESTAMP, 'Defective item', 'Pending', 210.00, 30.00);
+INSERT INTO Returns VALUES
+(16, 116, 216, 16, CURRENT_TIMESTAMP, 'Item not as described', 'Processed', 300.00, 20.00);
+INSERT INTO Returns VALUES
+(17, 117, 217, 17, CURRENT_TIMESTAMP, 'Product arrived late', 'Completed', 70.00, 12.00);
+INSERT INTO Returns VALUES
+(18, 118, 218, 18, CURRENT_TIMESTAMP, 'Damaged during shipping', 'Pending', 270.00, 18.00);
+INSERT INTO Returns VALUES
+(19, 119, 219, 19, CURRENT_TIMESTAMP, 'Quality issues', 'Processed', 160.00, 22.00);
+INSERT INTO Returns VALUES
+(20, 120, 220, 20, CURRENT_TIMESTAMP, 'Order error', 'Completed', 140.00, 15.00);
+
+CREATE TABLE Inventory (
+    InventoryID BIGINT PRIMARY KEY,
+    ProductID BIGINT,
+    SupplierID BIGINT,
+    StockQuantity INT,
+    ReorderLevel INT,
+    ReorderQuantity INT,
+    LastRestocked TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ExpirationDate DATE,
+    Location VARCHAR(100),
+    WarehouseID BIGINT,
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID),
+    FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID)
+);
+INSERT INTO Inventory VALUES
+(1, 201, 301, 150, 20, 100, CURRENT_TIMESTAMP, '2025-06-30', 'Warehouse A', 401);
+INSERT INTO Inventory VALUES
+(2, 202, 302, 80, 15, 50, CURRENT_TIMESTAMP, '2025-07-15', 'Warehouse B', 402);
+INSERT INTO Inventory VALUES
+(3, 203, 303, 200, 25, 150, CURRENT_TIMESTAMP, '2025-08-01', 'Warehouse C', 403);
+INSERT INTO Inventory VALUES
+(4, 204, 304, 120, 10, 75, CURRENT_TIMESTAMP, '2025-09-10', 'Warehouse A', 404);
+INSERT INTO Inventory VALUES
+(5, 205, 305, 90, 18, 60, CURRENT_TIMESTAMP, '2025-10-20', 'Warehouse B', 405);
+INSERT INTO Inventory VALUES
+(6, 206, 306, 250, 30, 200, CURRENT_TIMESTAMP, '2025-11-05', 'Warehouse C', 406);
+INSERT INTO Inventory VALUES
+(7, 207, 307, 60, 12, 40, CURRENT_TIMESTAMP, '2025-12-01', 'Warehouse A', 407);
+INSERT INTO Inventory VALUES
+(8, 208, 308, 110, 22, 80, CURRENT_TIMESTAMP, '2025-12-15', 'Warehouse B', 408);
+INSERT INTO Inventory VALUES
+(9, 209, 309, 140, 20, 100, CURRENT_TIMESTAMP, '2026-01-10', 'Warehouse C', 409);
+INSERT INTO Inventory VALUES
+(10, 210, 310, 95, 15, 65, CURRENT_TIMESTAMP, '2026-02-01', 'Warehouse A', 410);
+INSERT INTO Inventory VALUES
+(11, 211, 311, 130, 25, 90, CURRENT_TIMESTAMP, '2026-03-05', 'Warehouse B', 411);
+INSERT INTO Inventory VALUES
+(12, 212, 312, 70, 10, 55, CURRENT_TIMESTAMP, '2026-04-10', 'Warehouse C', 412);
+INSERT INTO Inventory VALUES
+(13, 213, 313, 180, 20, 120, CURRENT_TIMESTAMP, '2026-05-01', 'Warehouse A', 413);
+INSERT INTO Inventory VALUES
+(14, 214, 314, 100, 15, 70, CURRENT_TIMESTAMP, '2026-06-15', 'Warehouse B', 414);
+INSERT INTO Inventory VALUES
+(15, 215, 315, 220, 30, 150, CURRENT_TIMESTAMP, '2026-07-05', 'Warehouse C', 415);
+INSERT INTO Inventory VALUES
+(16, 216, 316, 85, 12, 50, CURRENT_TIMESTAMP, '2026-08-01', 'Warehouse A', 416);
+INSERT INTO Inventory VALUES
+(17, 217, 317, 160, 25, 110, CURRENT_TIMESTAMP, '2026-09-10', 'Warehouse B', 417);
+INSERT INTO Inventory VALUES
+(18, 218, 318, 75, 20, 60, CURRENT_TIMESTAMP, '2026-10-20', 'Warehouse C', 418);
+INSERT INTO Inventory VALUES
+(19, 219, 319, 140, 15, 95, CURRENT_TIMESTAMP, '2026-11-05', 'Warehouse A', 419);
+INSERT INTO Inventory VALUES
+(20, 220, 320, 190, 30, 130, CURRENT_TIMESTAMP, '2026-12-01', 'Warehouse B', 420);
+
+UPDATE Returns
+SET Status = CASE
+    WHEN RefundAmount > 200 THEN 'High Refund'
+    WHEN RefundAmount BETWEEN 100 AND 200 THEN 'Medium Refund'
+    ELSE 'Low Refund'
+END;
+
+SELECT *
+FROM Orders
+ORDER BY OrderID
+LIMIT 10 OFFSET 20;
+
+SELECT ProductID, COUNT(OrderID) AS NumberOfOrders
+FROM Orders
+GROUP BY ProductID
+HAVING COUNT(OrderID) > 50
+ORDER BY NumberOfOrders DESC;
+
+SELECT CustomerID, FirstName, LastName, Email
+FROM Customers
+ORDER BY LastName ASC, FirstName DESC;
+
